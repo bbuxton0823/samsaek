@@ -5,7 +5,11 @@ Handles all configuration settings for the Samsaek Multi-Agent AI System
 
 import os
 from typing import Optional, Dict, Any, List
-from pydantic import BaseSettings, Field, validator
+from pydantic import Field, validator
+try:
+    from pydantic_settings import BaseSettings
+except ImportError:
+    from pydantic import BaseSettings
 from enum import Enum
 
 
@@ -45,13 +49,13 @@ class SamsaekConfig(BaseSettings):
     cors_origins: List[str] = Field(default=["*"], description="CORS allowed origins")
     
     # Security Configuration
-    secret_key: str = Field(description="Secret key for JWT and encryption")
+    secret_key: str = Field(default="demo-secret-key-for-hackathon-2024", description="Secret key for JWT and encryption")
     jwt_algorithm: str = Field(default="HS256", description="JWT algorithm")
     jwt_expiration_hours: int = Field(default=24, description="JWT expiration in hours")
     encryption_key: Optional[str] = Field(default=None, description="Encryption key for sensitive data")
     
     # Database Configuration
-    database_url: str = Field(description="Database connection URL")
+    database_url: str = Field(default="sqlite:///./samsaek_demo.db", description="Database connection URL")
     database_pool_size: int = Field(default=10, description="Database connection pool size")
     database_max_overflow: int = Field(default=20, description="Database max overflow connections")
     
@@ -68,7 +72,7 @@ class SamsaekConfig(BaseSettings):
     kafka_auto_offset_reset: str = Field(default="latest", description="Kafka auto offset reset")
     
     # Google Gemini Configuration
-    google_api_key: str = Field(description="Google API key for Gemini")
+    google_api_key: str = Field(default="demo-google-api-key", description="Google API key for Gemini")
     google_project_id: Optional[str] = Field(default=None, description="Google Cloud project ID")
     gemini_model: str = Field(default="gemini-pro", description="Default Gemini model")
     gemini_max_tokens: int = Field(default=8192, description="Max tokens for Gemini")
@@ -78,7 +82,7 @@ class SamsaekConfig(BaseSettings):
     
     # A2A Protocol Configuration
     a2a_protocol_version: str = Field(default="1.0", description="A2A protocol version")
-    a2a_agent_id: str = Field(description="Unique A2A agent identifier")
+    a2a_agent_id: str = Field(default="samsaek-demo-agent-001", description="Unique A2A agent identifier")
     a2a_encryption_enabled: bool = Field(default=True, description="Enable A2A message encryption")
     a2a_signature_enabled: bool = Field(default=True, description="Enable A2A message signatures")
     a2a_message_ttl: int = Field(default=3600, description="A2A message TTL in seconds")
@@ -90,10 +94,28 @@ class SamsaekConfig(BaseSettings):
     crew_memory_enabled: bool = Field(default=True, description="Enable crew memory")
     
     # Exa Search Configuration
-    exa_api_key: str = Field(description="Exa API key")
+    exa_api_key: str = Field(default="demo-exa-api-key", description="Exa API key")
     exa_max_results: int = Field(default=10, description="Max Exa search results")
     exa_search_timeout: int = Field(default=15, description="Exa search timeout in seconds")
     exa_cache_ttl: int = Field(default=3600, description="Exa cache TTL in seconds")
+    
+    # Eleven Labs Voice Configuration
+    elevenlabs_api_key: str = Field(default="demo-elevenlabs-api-key", description="Eleven Labs API key")
+    elevenlabs_model: str = Field(default="eleven_monolingual_v1", description="Default Eleven Labs model")
+    elevenlabs_voice_id: str = Field(default="21m00Tcm4TlvDq8ikWAM", description="Default voice ID (Rachel)")
+    voice_request_timeout: int = Field(default=30, description="Voice request timeout in seconds")
+    voice_rate_limit: int = Field(default=20, description="Voice requests per minute")
+    voice_cache_enabled: bool = Field(default=True, description="Enable voice response caching")
+    voice_cache_ttl: int = Field(default=7200, description="Voice cache TTL in seconds")
+    
+    # Twilio Phone Configuration
+    twilio_account_sid: str = Field(default="demo-twilio-account-sid", description="Twilio Account SID")
+    twilio_auth_token: str = Field(default="demo-twilio-auth-token", description="Twilio Auth Token")
+    twilio_phone_number: str = Field(default="+1234567890", description="Twilio phone number")
+    twilio_webhook_url: Optional[str] = Field(default=None, description="Webhook URL for Twilio")
+    phone_call_timeout: int = Field(default=60, description="Phone call timeout in seconds")
+    phone_recording_enabled: bool = Field(default=True, description="Enable call recording")
+    phone_sms_enabled: bool = Field(default=True, description="Enable SMS capabilities")
     
     # Weave Monitoring Configuration
     weave_project_name: str = Field(default="samsaek", description="Weave project name")
