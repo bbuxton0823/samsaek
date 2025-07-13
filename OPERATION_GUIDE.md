@@ -10,10 +10,10 @@
 cd /Users/bychabuxton/samsaek
 
 # Ensure environment variables are set
-export TRANSITLAND_API_KEY=x5unflDSbpKEWnThyfmteM8MHxIsg3eL
-export 511APIKEY=09ddeab2-9b3f-4531-8a35-5304443e02b4
-export EXA_SEARCH_API_KEY=0ada66fe-bf44-4f53-8290-e4e1fd24d92c
-export GOOGLE_MAPS_API_KEY=AIzaSyDuv9fgGshY9pKXW_YTNijy6jrLajeo0h0
+export TRANSITLAND_API_KEY
+export 511APIKEY
+export EXA_SEARCH_API_KEY
+export GOOGLE_MAPS_API_KEY
 ```
 
 ### 2. Start Enhanced Voice Server
